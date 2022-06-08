@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+body {
+    font-family: "Roboto"!important;
+}
+
+.navbarContainer {
+    font-weight: bold!important;
+}
+.topNav {
+    background: black;
+    color: white;
+    font-size: 10pt;
+    padding: 0.7rem;
+    column-gap: 10pt;
+}
+
+.imgLogo {
+    width: 125px;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.2);
+}
+.iconCarrousel {
+    width: 250px!important;
+    height: 50px!important;
+}
+
+.sr-only {
+    opacity: 0!important;
+}
+.menuNav {
+    column-gap: 20pt;
+}
+
+.footerContainer {
+    background: black;
+}
+
+.cardContainer{
+    padding: 20pt;
+}
+
+.brandName {
+    font-size: 20pt;
+}
+
+.carrouselContainer {
+    height: auto;
+}
+
+.imgCarrousel {
+    height: 500px;
+}
+
+
+/*hehe*/
+
+.card{
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s;
+    cursor: pointer;
+    border:0!important;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card img{
+    max-height: 300px;
+}
+
+.card-1 {
+}
+
+/*.card-1{*/
+/*    background-image: url(https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: 100%;*/
+/*}*/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 1000px) {
+    .topNav {
+        padding: 2.5rem;
+    }
+    .nav-right {
+        display: none;
+    }
+
+    .nav-item{
+        border-bottom: 1px solid lightgray;
+        width: 100%!important;
+    }
+    .navbarItems{
+        width: 100%!important;
+    }
+}

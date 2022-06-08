@@ -2,6 +2,9 @@
 
 session_start();
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../Controllers/HomeController.php';
+
+
 
 $app = new \Slim\App([
     'settings' => [
@@ -19,9 +22,6 @@ $container['view'] = function($container) {
     return $view;
 };
 
-$container['HomeController'] = function ($container) {
-        return new \App\Controllers\HomeController;
-};
 
 //$test = [
 //];
@@ -36,5 +36,7 @@ $container['HomeController'] = function ($container) {
 
 // Rutas
 
-//$app->get('/', Shop\Controllers\HomeController::class . ":getIndex");
-$app->get('/', 'HomeController:index');
+//$app->get('/', App\Controllers\HomeController::class . ":getIndex");
+$app->get('/', \App\Controllers\HomeController::class . ':getIndex');
+$app->get('/bdd', \App\Controllers\HomeController::class . ':getBDD');
+
