@@ -1,0 +1,60 @@
+{% extends "templates/layout.twig" %}
+
+{% block content %}
+
+    <input id="searchbar" onkeyup="search_shirt()" type="text" name="search" placeholder="Busca tu producto...">
+
+    <div class="row w-100 mt-4">
+        <div class="col-12 d-flex flex-row justify-content-center">
+            {% for camiseta in shirtData %}
+                <div class="col-2 pl-2 ml-3 mr-3 mb-5 showSearch">
+                    <div class="product">
+                        <div class="product-image">
+                            <a href="/men/shirt/{{camiseta.id}}" class="image" id="1">
+                                <img class="img-1" src="{{ camiseta.url }}">
+{#                                <img class="img-2" src="{{ camiseta.urlBack }}">#}
+                            </a>
+                            <ul class="product-links">
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product-content">
+                            <ul class="rating">
+                                <li class="fas fa-star"></li>
+                                <li class="fas fa-star"></li>
+                                <li class="fas fa-star"></li>
+                                <li class="fas fa-star"></li>
+                                <li class="fas fa-star disable"></li>
+                                <li class="disable">(1 reviews)</li>
+                            </ul>
+                            <h3 class="title"><a href="#" id="shirtName">{{ camiseta.nombre }}</a></h3>
+                            <div class="price">{{ camiseta.precio }} €</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    function search_shirt() {
+        let input = document.getElementById('searchbar').value
+        input=input.toLowerCase();
+        let x = document.getElementsByClassName('showSearch');
+
+        console.log(x[0].children[0].children[1].children[1].innerText);
+
+        for (i = 0; i < x.length; i++) {
+            if (!x[i].children[0].children[1].children[1].innerText.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+            }
+            else {
+                x[i].style.display="data";
+            }
+        }
+    }
+</script>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Controllers\SQLController as SQLController;
+use App\Controllers\SQLController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -19,13 +19,15 @@ class HomeController
         return $this->view->render($response, 'home.twig');
     }
 
-    public function getBDD(Request $request, Response $response, $args){
+    public function getBDD(){
         try
         {
+            $SQLController = new SQLController();
+
             $colorCamisetas = [];
 
-            $conn = OpenConnection();
-            $tsql = "SELECT * FROM camisetas_mujer2";
+            $conn = $SQLController->OpenConnection();
+            $tsql = "SELECT * FROM CAMISETAS_HOMBRE";
             $getShirts= sqlsrv_query($conn, $tsql);
             if (!$getShirts)
                 die(sqlsrv_errors());

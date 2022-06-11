@@ -99,3 +99,10 @@ body {
         width: 100%!important;
     }
 }
+
+.menuDrop {
+    padding: 20px!important;
+    border: none!important;
+    width: 300px;
+    background: #f8f9fa!important;
+}
