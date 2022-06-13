@@ -1,60 +1,192 @@
-{% extends "templates/layout.twig" %}
+ {% extends "templates/layout.twig" %}
 
 {% block content %}
+    <div class="container-fluid row w-100 mt-4 mr-0 ml-0" id="app">
+        <div class="cols-12 d-flex justify-content-center w-100">
 
-    <input id="searchbar" onkeyup="search_shirt()" type="text" name="search" placeholder="Busca tu producto...">
+        <input class="" id="searchbar" onkeyup="search_shirt()" type="text" name="search" placeholder="Busca tu producto...">
 
-    <div class="row w-100 mt-4">
-        <div class="col-12 d-flex flex-row justify-content-center">
-            {% for camiseta in shirtData %}
-                <div class="col-2 pl-2 ml-3 mr-3 mb-5 showSearch">
-                    <div class="product">
-                        <div class="product-image">
-                            <a href="/men/shirt/{{camiseta.id}}" class="image" id="1">
-                                <img class="img-1" src="{{ camiseta.url }}">
-{#                                <img class="img-2" src="{{ camiseta.urlBack }}">#}
-                            </a>
-                            <ul class="product-links">
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#cartModal"><i class="fa-solid fa-cart-shopping"></i> ({- totalItems
+            -})
+        </button>
+
+        </div>
+
+        <div class="cols-12 w-100">
+            <!-- Modal -->
+            <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Cart</h4>
                         </div>
-                        <div class="product-content">
-                            <ul class="rating">
-                                <li class="fas fa-star"></li>
-                                <li class="fas fa-star"></li>
-                                <li class="fas fa-star"></li>
-                                <li class="fas fa-star"></li>
-                                <li class="fas fa-star disable"></li>
-                                <li class="disable">(1 reviews)</li>
-                            </ul>
-                            <h3 class="title"><a href="#" id="shirtName">{{ camiseta.nombre }}</a></h3>
-                            <div class="price">{{ camiseta.precio }} €</div>
+                        <div class="modal-body">
+                            <shopping-cart inline-template :items="cartItems">
+                                <div>
+                                    <table class="table table-cart">
+                                        <tr v-for="(item, index) in items">
+                                            <td>{- item.nombre -}</td>
+                                            <td style="width:120px">
+                                                <input v-model="item.cantidad" class="form-control input-qty"
+                                                       type="number" min="1">
+                                            </td>
+                                            <td class="text-right">{- item.precio -} €</td>
+                                            <td>
+                                                <button @click="removeItem(index)"><span
+                                                            class="glyphicon glyphicon-trash"></span></button>
+                                            </td>
+                                        </tr>
+                                        <tr v-show="items.length === 0">
+                                            <td colspan="4" class="text-center">Cart is empty</td>
+                                        </tr>
+                                        <tr v-show="items.length > 0">
+                                            <td></td>
+                                            <td class="text-right">Cart Total</td>
+                                            <td class="text-right">${- Total -}</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!-- /.container -->
+                            </shopping-cart>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+
+            <div class="container-fluid p-0 row m-0">
+                <div class="row col-12 d-flex flex-row justify-content-center">
+                    <div class="col-2 m-5 showSearch" v-for="(item,index) in items" style="width: 200px!important">
+                        <div class="product">
+                            <div class="product-image">
+                                <a href="/men/shirt/" class="image" id="1">
+                                    <img class="img-1" :src="item.url">
+                                    <img class="img-2" src="{{ camiseta.urlBack }}">
+                                </a>
+                                <ul class="product-links">
+                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="product-content">
+                                <ul class="rating">
+                                    <li class="fas fa-star"></li>
+                                    <li class="fas fa-star"></li>
+                                    <li class="fas fa-star"></li>
+                                    <li class="fas fa-star"></li>
+                                    <li class="fas fa-star disable"></li>
+                                    <li class="disable">(1 reviews)</li>
+                                </ul>
+                                <h3 class="title"><a href="#" id="shirtName">{- item.nombre -}</a></h3>
+                                <select id="sizes">
+                                    <option value="xl">xl</option>
+                                    <option value="l">l</option>
+                                    <option value="m">m</option>
+                                    <option value="s">s</option>
+                                    <option value="xs">xs</option>
+                                </select>
+                                <div class="">{- item.precio -} €</div>
+                                <div class="">{- item.cantidad -}</div>
+                                <div class="boton">
+                                    <button @click="addToCart(item)" class="btn btn-sm btn-primary">Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+
+
 {% endblock %}
 
 
 {% block js %}
-<script>
-    function search_shirt() {
-        let input = document.getElementById('searchbar').value
-        input=input.toLowerCase();
-        let x = document.getElementsByClassName('showSearch');
+    <script>
+        function search_shirt() {
+            let input = document.getElementById('searchbar').value
+            input = input.toLowerCase();
+            let x = document.getElementsByClassName('showSearch');
 
-        console.log(x[0].children[0].children[1].children[1].innerText);
+            console.log(x[0].children[0].children[1].children[1].innerText);
 
-        for (i = 0; i < x.length; i++) {
-            if (!x[i].children[0].children[1].children[1].innerText.toLowerCase().includes(input)) {
-                x[i].style.display="none";
-            }
-            else {
-                x[i].style.display="data";
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].children[0].children[1].children[1].innerText.toLowerCase().includes(input)) {
+                    x[i].style.display = "none";
+                } else {
+                    x[i].style.display = "block";
+                }
             }
         }
-    }
-</script>
+
+        const products = {{ shirtData|json_encode|raw }};
+        console.log(products);
+
+
+        // Componente carrito (x)
+
+        Vue.component('shopping-cart', {
+            props: ['items'],
+            computed: {
+                Total() {
+                    let total = 0;
+                    this.items.forEach(item => {
+                        total += (item.precio * item.cantidad);
+                    });
+                    return total;
+                }
+            },
+
+            methods: {
+                // Remover item de la lista del carrito según su index(botón borrar)
+                removeItem(index) {
+                    this.items.splice(index, 1)
+                }
+            }
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            delimiters: ['{-', '-}'],
+            data: {
+                cartItems: [],
+                items: products
+            },
+
+            computed: {
+                totalItems() {
+                    return this.cartItems.reduce((accumulator, item) => {
+                        return accumulator + item.cantidad;
+                    }, 0);
+                }
+            },
+
+            methods: {
+                // Funcion añadir al carrito
+                addToCart(itemToAdd) {
+                    let found = false;
+
+                    // Añadir item || Aumentar Cantidad
+                    let itemInCart = this.cartItems.filter(item => item.id === itemToAdd.id);
+                    let isItemInCart = itemInCart.length > 0;
+
+                    if (isItemInCart === false) {
+                        this.cartItems.push(Vue.util.extend({}, itemToAdd));
+                    } else {
+                        itemInCart[0].cantidad += itemToAdd.cantidad;
+                    }
+
+                    itemToAdd.cantidad = 1;
+                }
+            }
+        })
+
+    </script>
 {% endblock %}

@@ -16,7 +16,7 @@ class HomeController
 
     public function getIndex(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, 'home.twig');
+        return $this->view->render($response, '/home/home.twig');
     }
 
     public function getBDD(){

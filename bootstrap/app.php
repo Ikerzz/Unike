@@ -26,12 +26,10 @@ $container['view'] = function($container) {
 
 // Rutas
 
-//$app->get('/', App\Controllers\HomeController::class . ":getIndex");
 $app->get('/', \App\Controllers\HomeController::class . ':getIndex');
 $app->get('/bdd', \App\Controllers\HomeController::class . ':getBDD');
 $app->get('/men/shirts', \App\Controllers\MenController::class . ':getShirt');
 $app->get('/men/shirts/{id}', \App\Controllers\MenController::class . ':getUniqueShirt');
-$app->get('/vue', \App\Controllers\MenController::class . ':Vue');
 
 
 
