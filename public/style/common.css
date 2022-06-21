@@ -2,8 +2,8 @@
 
 body {
     font-family: "Roboto"!important;
+    height: 20vh!important;
 }
-
 .navbarContainer {
     font-weight: bold!important;
 }
@@ -34,8 +34,30 @@ body {
     column-gap: 20pt;
 }
 
+/*.content{*/
+/*    width: 100%;*/
+/*    min-height: calc(100vh - 114px - 112px);*/
+/*}*/
+
 .footerContainer {
-    background: black;
+    background: black!important;
+}
+
+.textFooter {
+    font-style: italic;
+    text-decoration: none;
+    color: white;
+}
+
+.textFooter:hover {
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.textFooter:visited{
+    text-decoration: none;
+    color: white;
 }
 
 .cardContainer{
@@ -53,6 +75,12 @@ body {
 .imgCarrousel {
     height: 500px;
 }
+
+/*footer*/
+
+
+
+/**/
 
 
 /*hehe*/
@@ -101,8 +129,25 @@ body {
 }
 
 .menuDrop {
+    padding-right: 50pt!important;
     padding: 20px!important;
     border: none!important;
-    width: 300px;
+    width: 25rem;
     background: #f8f9fa!important;
+}
+
+.shopLink {
+    text-decoration: none;
+    color: grey;
+}
+
+.shopLink:visited{
+    text-decoration: none;
+    color: grey;
+}
+
+.shopLink:hover {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
 }

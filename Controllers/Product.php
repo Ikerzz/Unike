@@ -1,0 +1,98 @@
+<?php
+
+namespace App\Controllers;
+
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
+class Product
+{
+    protected $view;
+
+    public function __construct($container) {
+        $this->view = $container->get('view');
+    }
+
+    public function getUniqueProduct(Request $request, Response $response, $args)
+    {
+        $params = $request->getQueryParams();
+
+        try
+        {
+            $SQLController = new SQLController();
+
+            $valorations = $this->getValorations($params['id']);
+
+            $uniqueProduct = [
+            ];
+
+            $conn = $SQLController->OpenConnection();
+            $tsql = "SELECT * FROM PRODUCTOS WHERE ID = ".$params['id'] .";";
+            $getUniqueProduct= sqlsrv_query($conn, $tsql);
+
+            if (!$getUniqueProduct){
+                die(sqlsrv_errors());
+            }
+
+            while($row = sqlsrv_fetch_array( $getUniqueProduct, SQLSRV_FETCH_ASSOC))
+            {
+                array_push($uniqueProduct,$row);
+            }
+            sqlsrv_free_stmt($getUniqueProduct);
+            sqlsrv_close($conn);
+        }
+        catch(Exception $e)
+        {
+            echo("Error!");
+        }
+
+        $uniqueProduct = [
+            'productData' => $uniqueProduct,
+            'valorations' => $valorations,
+        ];
+
+
+//        dd($uniqueProduct);
+
+        return $this->view->render($response, 'shop/single-product/index.twig',$uniqueProduct);
+    }
+
+    public function getValorations($id)
+    {
+        try
+        {
+            $SQLController = new SQLController();
+
+            $valorations = [
+            ];
+
+            $conn = $SQLController->OpenConnection();
+            $tsql = "SELECT VALORACIONES.ID,VALORACIONES.descripcion,VALORACIONES.estrellas,USUARIOS.usuario 
+                    FROM VALORACIONES
+                    INNER JOIN USUARIOS
+                    ON VALORACIONES.ID_USUARIO = USUARIOS.id
+                    INNER JOIN PRODUCTOS
+                    ON VALORACIONES.ID_PRODUCTO = PRODUCTOS.id
+                    WHERE VALORACIONES.ID_PRODUCTO= $id;";
+            $getValoration= sqlsrv_query($conn, $tsql);
+
+            if (!$getValoration){
+                die(sqlsrv_errors());
+            }
+
+            while($row = sqlsrv_fetch_array( $getValoration, SQLSRV_FETCH_ASSOC))
+            {
+                array_push($valorations,$row);
+            }
+            sqlsrv_free_stmt($getValoration);
+            sqlsrv_close($conn);
+        }
+        catch(Exception $e)
+        {
+            echo("Error!");
+        }
+
+        return $valorations;
+    }
+
+}

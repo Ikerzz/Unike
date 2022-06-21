@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class MenController
+class WomenController
 {
     protected $view;
 
@@ -23,7 +23,7 @@ class MenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'camiseta_hombre';";
+            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'camiseta_mujer';";
             $getShirts= sqlsrv_query($conn, $tsql);
 
             if (!$getShirts){
@@ -34,6 +34,7 @@ class MenController
             {
                 array_push($shirts,$row);
             }
+
             sqlsrv_free_stmt($getShirts);
             sqlsrv_close($conn);
         }
@@ -47,7 +48,15 @@ class MenController
             'productData' => $shirts,
         ];
 
+
         return $this->view->render($response, 'shop/index.twig',$allShirts);
+    }
+
+    public function getUniqueShirt(Request $request, Response $response, $args)
+    {
+        $params = $request->getQueryParams();
+
+        return $this->view->render($response, 'shop/single-product/index.twig');
     }
 
     public function getPants(Request $request, Response $response, $args)
@@ -60,7 +69,7 @@ class MenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'pantalon_hombre';";
+            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'pantalon_mujer';";
             $getPants= sqlsrv_query($conn, $tsql);
 
             if (!$getPants){
@@ -87,6 +96,12 @@ class MenController
         return $this->view->render($response, 'shop/index.twig',$allPants);
     }
 
+    public function getUniquePant(Request $request, Response $response, $args)
+    {
+        $params = $request->getQueryParams();
+
+        return $this->view->render($response, 'shop/single-product/index.twig');
+    }
 
     public function getFootWear(Request $request, Response $response, $args)
     {
@@ -98,10 +113,10 @@ class MenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'zapatilla_hombre';";
-            $getFootWear = sqlsrv_query($conn, $tsql);
+            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'zapatilla_mujer';";
+            $getFootWear= sqlsrv_query($conn, $tsql);
 
-            if (!$getFootWear) {
+            if (!$getFootWear){
                 die(sqlsrv_errors());
             }
 
@@ -123,6 +138,13 @@ class MenController
         ];
 
         return $this->view->render($response, 'shop/index.twig',$allFootWear);
+    }
+
+    public function getUniqueFootWear(Request $request, Response $response, $args)
+    {
+        $params = $request->getQueryParams();
+
+        return $this->view->render($response, 'shop/single-product/index.twig');
     }
 
 }

@@ -1,4 +1,23 @@
- {% extends "templates/layout.twig" %}
+{% extends "templates/layout.twig" %}
+
+{% block css %}
+ <style>
+    .productContainer{
+        gap: 10px;
+    }
+    .sizes {
+        width: 50px;
+    }
+
+    .table td{
+        border: none!important;
+    }
+
+    .buttonCart:checked {
+        border: none!important;
+    }
+ </style>
+{% endblock %}
 
 {% block content %}
     <div class="container-fluid row w-100 mt-4 mr-0 ml-0" id="app">
@@ -18,42 +37,40 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Cart</h4>
+                            <h3>Carrito</h3>
                         </div>
                         <div class="modal-body">
                             <shopping-cart inline-template :items="cartItems">
-                                <div>
                                     <table class="table table-cart">
                                         <tr v-for="(item, index) in items">
                                             <td>{- item.nombre -}</td>
-                                            <td style="width:120px">
+                                            <td style="width: 120px!important;">
                                                 <input v-model="item.cantidad" class="form-control input-qty"
                                                        type="number" min="1">
                                             </td>
                                             <td class="text-right">{- item.precio -} €</td>
                                             <td>
-                                                <button @click="removeItem(index)"><span
-                                                            class="glyphicon glyphicon-trash"></span></button>
+                                                <button @click="removeItem(index)">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                         <tr v-show="items.length === 0">
-                                            <td colspan="4" class="text-center">Cart is empty</td>
+                                            <td colspan="4" class="text-center" style="border:none!important;">El carrito está vacío!</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
                                         </tr>
                                         <tr v-show="items.length > 0">
                                             <td></td>
-                                            <td class="text-right">Cart Total</td>
-                                            <td class="text-right">${- Total -}</td>
-                                            <td></td>
+                                            <td colspan="3" style="border-top: 1px solid #dee2e6!important;" class="text-right">Total del Carrito {- Total -} €</td>
                                         </tr>
                                     </table>
-                                </div>
                                 <!-- /.container -->
                             </shopping-cart>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>
@@ -61,28 +78,27 @@
 
             <div class="container-fluid p-0 row m-0">
                 <div class="row col-12 d-flex flex-row justify-content-center">
-                    <div class="col-2 m-5 showSearch" v-for="(item,index) in items" style="width: 200px!important">
+                    <div class="col-2 m-5 showSearch" v-for="(item,index) in items">
                         <div class="product">
                             <div class="product-image">
-                                <a href="/men/shirt/" class="image" id="1">
-                                    <img class="img-1" :src="item.url">
-                                    <img class="img-2" src="{{ camiseta.urlBack }}">
+                                <a :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria" class="image" :name="item.id">
+                                    <img class="img-1" :src="item.url" :alt="item.nombre">
+                                    <img class="img-2" :src="item.back_url" :alt="item.nombre">
                                 </a>
                                 <ul class="product-links">
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li>
+                                        <button @click="addToCart(item)" class="btn btn-outline-dark buttonCart">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="product-content">
+                            <div class="d-flex flex-column product-content productContainer">
                                 <ul class="rating">
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star"></li>
-                                    <li class="fas fa-star disable"></li>
-                                    <li class="disable">(1 reviews)</li>
+                                    <li class="disable">(Reviews en el producto)</li>
                                 </ul>
-                                <h3 class="title"><a href="#" id="shirtName">{- item.nombre -}</a></h3>
-                                <select id="sizes">
+                                <h3 class="title"><a :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria" id="shirtName">{- item.nombre -}</a></h3>
+                                <select class="sizes" id="sizes">
                                     <option value="xl">xl</option>
                                     <option value="l">l</option>
                                     <option value="m">m</option>
@@ -90,9 +106,9 @@
                                     <option value="xs">xs</option>
                                 </select>
                                 <div class="">{- item.precio -} €</div>
-                                <div class="">{- item.cantidad -}</div>
                                 <div class="boton">
-                                    <button @click="addToCart(item)" class="btn btn-sm btn-primary">Add to Cart
+                                    <button @click="addToCart(item)" class="btn btn-sm btn-light p-2">
+                                        Añadir al carrito
                                     </button>
                                 </div>
                             </div>
@@ -126,9 +142,8 @@
             }
         }
 
-        const products = {{ shirtData|json_encode|raw }};
+        const products = {{ productData|json_encode|raw }};
         console.log(products);
-
 
         // Componente carrito (x)
 

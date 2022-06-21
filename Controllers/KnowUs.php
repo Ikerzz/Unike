@@ -2,10 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Controllers\SQLController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class HomeController
+class KnowUs
 {
     protected $view;
 
@@ -15,9 +16,7 @@ class HomeController
 
     public function getIndex(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, '/home/index.twig');
+        return $this->view->render($response, '/home/home.twig');
     }
-
-
 
 }
