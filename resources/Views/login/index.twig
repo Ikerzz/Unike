@@ -3,7 +3,18 @@
 {% block css %}
 
     <style>
-
+        .footerContainer {
+            display: none;
+        }
+        .errorMessage {
+            width: 200px;
+            color: white;
+            background: red;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
     </style>
 
 {% endblock %}
@@ -27,10 +38,10 @@
                                 <input type="password" class="form-control" id="password" name="password"
                                        placeholder="Contraseña">
                             </div>
-                            {% if data %}
-                                <div class="form-text">
+                            {% if data.status == 'KO' %}
+                                <div class="form-text d-flex justify-content-center">
                                     <label for="error" class="sr-only">Error</label>
-                                    <p class="">{{ data.error }}</p>
+                                    <p class="errorMessage">{{ data.message }}</p>
                                 </div>
                             {% endif %}
                         </div>

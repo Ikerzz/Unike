@@ -1,4 +1,4 @@
-{% extends "/templates/layout.twig" %}
+{% extends "/templates/admin-layout.twig" %}
 
 {% block css %}
 
@@ -6,12 +6,104 @@
         .footerContainer {
             display: none;
         }
+        .containerProducts {
+            height: 50px!important;
+            /*background: blue;*/
+        }
+        img {
+            width: 150px!important;
+            object-fit: cover;
+        }
+        .totalPrice {
+            text-decoration: line-through;
+        }
+
+        .textProductsBuy {
+            font-weight: bold;
+            background: #eaeaea;
+            border-radius: 5px!important;
+            padding: 10px!important;
+        }
+
+        .gap {
+            gap: 10px!important;
+        }
+
+        .descProduct {
+            color: #808080 !important;
+            font-weight: bold;
+        }
     </style>
 
 {% endblock %}
 
 {% block content %}
-    <a href="/panel/products">Ir a productos</a>
+    <div class="container">
+        <h2 class="text-center mb-3 mt-3 font-weight-bold">Bienvenido <span class="text-danger font-weight-bold">{{ name }}</span></h2>
+        <h3 class="text-center mb-5 mt-3"><span class="textProductsBuy">Lista de tus productos comprados</span></h3>
+        <div class="row m-0 containerProducts d-flex justify-content-center">
+            {% for product in products %}
+                <div class="col-12 row mb-3 d-flex justify-content-center" id="{{product.id_producto}}">
+                    <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
+                        {% if product.categoria == 'camiseta_hombre' %}
+                            <a href="/men/shirts/{{ product.id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                        {% if product.categoria == 'pantalon_hombre' %}
+                            <a href="/men/pants/{{ id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                        {% if product.categoria == 'zapatilla_hombre' %}
+                            <a href="/men/footwear/{{ id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                        {% if product.categoria == 'camiseta_mujer' %}
+                            <a href="/women/pants/{{ id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                        {% if product.categoria == 'pantalon_mujer' %}
+                            <a href="/women/pants/{{ id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                        {% if product.categoria == 'zapatilla_mujer' %}
+                            <a href="/women/pants/{{ id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
+                                <img src="{{ product.url }}">
+                            </a>
+                        {% endif %}
+
+                    </div>
+                    <div class="col-12 col-lg-4 d-flex flex-column justify-content-center gap mb-3 mb-lg-0">
+                        <h5 class="font-weight-bold mb-lg-3 mt-3 mt-lg-0 text-center">Nombre de la prenda</h5>
+                        <h5 class="text-center descProduct">{{ product.nombre }}</h5>
+                    </div>
+                    <div class="col-lg-3 d-flex flex-column justify-content-center gap align-items-center mb-3 mb-lg-0">
+                        <h5 class="font-weight-bold mb-3">Precio</h5>
+                        {% if  product.precio > product.PRECIO_FINAL %}
+                            <h5><span class="totalPrice descProduct">{{ product.precio }} €</span> <span class="text-danger">{{ product.PRECIO_FINAL }} €</span></span>
+                        {% else %}
+                            <h5 class="descProduct">{{ product.precio }} €</h5>
+                        {% endif %}
+                        </h5>
+                    </div>
+
+                    <div class="col-lg-3 d-flex flex-column justify-content-center gap align-items-center">
+                        <h5 class="font-weight-bold mb-3">Fecha de Compra</h5>
+                        <h5 class="descProduct"> {{ product.fecha_compra }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
 {% block js %}

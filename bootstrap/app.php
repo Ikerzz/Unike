@@ -62,13 +62,22 @@ $app->get('/knowUs', \App\Controllers\KnowUsController::class . ':getIndex');
 
 $app->get('/register', \App\Controllers\PanelController::class . ':getRegister');
 $app->post('/registerUser', \App\Controllers\PanelController::class . ':registerUser');
+$app->get('/reg', \App\Controllers\SQLController::class . ':registerUser');
+
 $app->get('/login', \App\Controllers\PanelController::class . ':getIndex');
 
-// Rutas Panel usuario
+
+$app->get('/killUser', \App\Controllers\PanelController::class . ':killUser');
+
+// Rutas Panel User
 
 $app->post('/panel', \App\Controllers\PanelController::class . ':getUser');
 $app->get('/panel', \App\Controllers\PanelController::class . ':getPanel');
-$app->get('/panel/products', \App\Controllers\PanelController::class . ':getPanelProducts');
+
+// Rutas Panel Admin
+
+$app->get('/panel/edit-user/{id}', \App\Controllers\PanelController::class . ':editUser');
+$app->post('/panel/insertUser', \App\Controllers\PanelController::class . ':editUserBD');
 
 
 // Rutas para Catalogo

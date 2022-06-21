@@ -18,7 +18,11 @@ body {
 .imgLogo {
     width: 125px;
 }
-
+@media (max-width: 600px) {
+    .facet_sidebar {
+        display: none;
+    }
+}
 .carousel-caption {
     background: rgba(0, 0, 0, 0.2);
 }

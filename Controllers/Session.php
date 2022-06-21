@@ -14,8 +14,9 @@ class Session {
     public function get($name) {
         if (isset($_SESSION[$name])) {
             return $_SESSION[$name];
+        } else {
+            return false;
         }
-        return $_SESSION[$name];
     }
 
     public function kill($name) {

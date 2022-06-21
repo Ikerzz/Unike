@@ -3,7 +3,26 @@
 {% block css %}
 
     <style>
-
+        .footerContainer {
+            display:none;
+        }
+        .form-group{
+            font-weight: bold;
+        }
+        .errorMessage,.successMessage {
+            width: 200px;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .errorMessage{
+            background: red;
+        }
+        .successMessage {
+            background: lightgreen;
+        }
     </style>
 
 {% endblock %}
@@ -17,6 +36,16 @@
                 <form action="/registerUser" id="loginForm" method="post">
                     <div class="main-login-form">
                         <div class="login-group">
+                            <div class="form-group">
+                                <label for="lg_name" class="sr-only">Name</label>
+                                <input type="name" class="form-control" id="name" name="name"
+                                       placeholder="Introduce nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lg_lastname" class="sr-only">Last Name</label>
+                                <input type="lastname" class="form-control" id="lastname" name="lastname"
+                                       placeholder="Introduce tus Apellidos" required>
+                            </div>
                             <div class="form-group">
                                 <label for="lg_email" class="sr-only">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
@@ -32,12 +61,21 @@
                                 <input type="password" class="form-control" id="password" name="password"
                                        placeholder="Introduce una contraseña!" required>
                             </div>
-                            {% if data %}
-                                <div class="form-text">
+
+                            {% if data.status == 'KO' %}
+                                <div class="form-text d-flex justify-content-center">
                                     <label for="error" class="sr-only">Error</label>
-                                    <p class="">{{ data.error }}</p>
+                                    <p class="errorMessage">{{ data.message }}</p>
                                 </div>
                             {% endif %}
+
+                            {% if data.status == 'OK' %}
+                                <div class="form-text d-flex justify-content-center">
+                                    <label for="user" class="sr-only">Introducido</label>
+                                    <p class="successMessage">{{ data.message }}</p>
+                                </div>
+                            {% endif %}
+
                         </div>
                         <button type="submit" class="btn btn-light mb-5">Registrar <i class="fa fa-chevron-right"></i></button>
                     </div>

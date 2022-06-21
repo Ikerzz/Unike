@@ -1,0 +1,89 @@
+{% extends "/templates/admin-layout.twig" %}
+
+{% block css %}
+
+    <style>
+        input {
+            width: 100%;
+            text-align: center;
+            border-radius: 3px!important;
+            border: 2px solid lightgrey;
+            padding: 5px!important;
+        }
+        .inputContainer{
+            width: 100%!important;
+        }
+        .containerInputs {
+           gap: 10px!important;
+        }
+        h5 {
+            font-weight: bold;
+        }
+
+        .errorMessage,.successMessage {
+            width: 200px;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .errorMessage{
+            background: red;
+        }
+        .successMessage {
+            background: lightgreen;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row p-0 m-0 justify-content-center">
+        {% for user in userSelected %}
+            <h3 class="text-center mb-4 mt-4 font-weight-bold">Editando el usuario :  <span class="font-weight-bold text-danger">{{ user.nombre }}</span></h3>
+            <form class="row p-0 m-0 d-flex flex-row" action="/panel/insertUser" method="post">
+                <div class="col-12 d-flex flex-row containerInputs justify-content-center mb-3">
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>Nombre </h5>
+                        <input value="{{ user.nombre }}" type="text" id="name" name="name" placeholder="Nombre" minlength="1" maxlength="99" size="100" required>
+                    </div>
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>Apellidos</h5>
+                        <input value="{{ user.apellidos }}" type="text" id="lastname" name="lastname" placeholder="Apellidos" minlength="1" maxlength="99" size="100" required>
+                    </div>
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>E-Mail</h5>
+                        <input value="{{ user.email }}" type="email" id="email" name="email" placeholder="Email" minlength="1" maxlength="199" size="200" required>
+                    </div>
+                </div>
+                <div class="col-12 d-flex flex-row containerInputs justify-content-center mb-3">
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>Nombre de usuario</h5>
+                        <input value="{{ user.usuario }}" type="text" id="user" name="user" placeholder="Introduce el usuario..." minlength="1" maxlength="49" size="50" required>
+                    </div>
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>Contraseña</h5>
+                        <input type="text" id="password" name="password" placeholder="Introduce la nueva contraseña..." minlength="1" maxlength="49" size="50" required>
+                    </div>
+                    <div class="d-flex flex-column inputContainer align-items-center">
+                        <h5>Administrador</h5>
+                        <input value="{{ user.administrador }}" type="number" id="admin" name="admin" placeholder="Introduce si es admin (0 para no, 1 para si)" maxlength="2" min="0" max="1" required>
+                    </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <input type="submit" class="btn btn-secondary w-auto" value="Editar Usuario"/>
+                </div>
+            </form>
+        {% endfor %}
+    <a href="/panel" class="btn btn-secondary text-white m-4"><i class="fa-solid fa-angles-left"></i> Volver al menú</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,15 +1,80 @@
-{% extends "/templates/layout.twig" %}
+{% extends "/templates/admin-layout.twig" %}
 
 {% block css %}
 
     <style>
+        .containerUsers {
+            gap: 10px!important;
+        }
+        .iconHref {
+            color: #949494;
+            text-decoration: none;
+        }
+        .iconHref:visited {
+            color: #949494;
+            text-decoration: none;
+        }
+        .iconHref:hover {
+            color: black;
+            text-decoration: none;
+        }
+        .modalTextContainer {
+            border-bottom: 1px solid lightgrey;
+        }
     </style>
 
 {% endblock %}
 
 {% block content %}
 
-    menu ADMIN
+<div class="container-fluid">
+    <h3 class="mb-4 mt-4">Edita un usuario! (Haz click en alguno para editarlo)</h3>
+    <div class="d-flex flex-row containerUsers">
+    {% for user in users %}
+        <a class="btn btn-secondary" href="/panel/edit-user/{{ user.ID }}?name={{ user.usuario }}">{{ user.nombre }}</a>
+    {% endfor %}
+
+    {% if data.status == 'KO' %}
+        <div class="modal fade bd-example-modal-sm show" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-modal="true" style="display: block">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content p-0">
+                    <div class="p-3 d-flex justify-content-center align-items-center flex-column modalTextContainer">
+                        <span class="text-danger font-weight-bold text-white textoModal">{{ data.message }}</span>
+                    </div>
+                    <a href="/panel" class="iconHref text-center pt-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop fade show"></div>
+
+    {% endif %}
+
+    {% if data.status == 'OK' %}
+        <div class="modal fade bd-example-modal-sm show" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-modal="true" style="display: block">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content p-0">
+                    <div class="p-3 d-flex justify-content-center align-items-center flex-column modalTextContainer">
+                        <span class="text-success font-weight-bold text-white textoModal">{{ data.message }}</span>
+                    </div>
+                    <a href="/panel" class="iconHref text-center pt-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-backdrop fade show"></div>
+
+    {% endif %}
+
+
+
+    </div>
+</div>
+
 {% endblock %}
 
 {% block js %}
