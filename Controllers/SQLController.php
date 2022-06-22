@@ -107,8 +107,9 @@ class SQLController
         {
             return $data = [
                 'data' => [
+                    'status' => 'KO',
                     'error' => (sqlsrv_errors()),
-                ],
+                ]
             ];
         }
 
@@ -140,9 +141,8 @@ class SQLController
         catch(Exception $e)
         {
             return $data = [
-                'data' => [
+                    'status' => 'KO',
                     'error' => (sqlsrv_errors()),
-                ],
             ];
         }
 
@@ -158,8 +158,10 @@ class SQLController
 
             $conn = $this->OpenConnection();
             $tsql = "
-            SELECT COMPRAS.id_producto,COMPRAS.id_usuario,COMPRAS.fecha_compra,COMPRAS.categoria,COMPRAS.cantidad, 
-            PRODUCTOS.nombre,PRODUCTOS.url,PRODUCTOS.precio,PRODUCTOS.PRECIO - (PRODUCTOS.PRECIO*(PRODUCTOS.DESCUENTO/100)) as PRECIO_FINAL
+            SELECT COMPRAS.id_producto,COMPRAS.id_usuario,COMPRAS.fecha_compra,COMPRAS.categoria,COMPRAS.cantidad,PRODUCTOS.DESCUENTO,
+            PRODUCTOS.nombre,PRODUCTOS.url,PRODUCTOS.precio,PRODUCTOS.PRECIO - (PRODUCTOS.PRECIO*(PRODUCTOS.DESCUENTO/100)) as PRECIO_FINAL,
+            PRECIO*COMPRAS.cantidad AS PRECIO_TOTAL_CANTIDAD,
+            (PRECIO*COMPRAS.cantidad) - ((PRECIO*COMPRAS.CANTIDAD)*(PRODUCTOS.descuento/100)) AS PRECIO_DESCUENTO
             FROM COMPRAS
             INNER JOIN USUARIOS
             ON COMPRAS.id_usuario = USUARIOS.id
@@ -184,9 +186,8 @@ class SQLController
         catch(Exception $e)
         {
             return $data = [
-                'data' => [
+                    'status' => 'KO',
                     'error' => (sqlsrv_errors()),
-                ],
             ];
         }
 
@@ -217,6 +218,12 @@ class SQLController
     }
 
     public function insertEditedUser($email,$name,$lastname,$username,$password,$admin){
+
+        $name = $this->eliminar_tildes($name);
+        $email = $this->eliminar_tildes($email);
+        $lastname = $this->eliminar_tildes($lastname);
+        $username = $this->eliminar_tildes($username);
+        $password = $this->eliminar_tildes($password);
 
         $v = new Valitron(array
         (
@@ -271,5 +278,106 @@ class SQLController
 
             return $data;
         }
+    }
+    function eliminar_tildes($cadena){
+
+        $cadena = str_replace(
+            array('á', 'à', 'ä', 'â', 'ª', 'Á', 'À', 'Â', 'Ä'),
+            array('a', 'a', 'a', 'a', 'a', 'A', 'A', 'A', 'A'),
+            $cadena
+        );
+
+        $cadena = str_replace(
+            array('é', 'è', 'ë', 'ê', 'É', 'È', 'Ê', 'Ë'),
+            array('e', 'e', 'e', 'e', 'E', 'E', 'E', 'E'),
+            $cadena );
+
+        $cadena = str_replace(
+            array('í', 'ì', 'ï', 'î', 'Í', 'Ì', 'Ï', 'Î'),
+            array('i', 'i', 'i', 'i', 'I', 'I', 'I', 'I'),
+            $cadena );
+
+        $cadena = str_replace(
+            array('ó', 'ò', 'ö', 'ô', 'Ó', 'Ò', 'Ö', 'Ô'),
+            array('o', 'o', 'o', 'o', 'O', 'O', 'O', 'O'),
+            $cadena );
+
+        $cadena = str_replace(
+            array('ú', 'ù', 'ü', 'û', 'Ú', 'Ù', 'Û', 'Ü'),
+            array('u', 'u', 'u', 'u', 'U', 'U', 'U', 'U'),
+            $cadena );
+
+        $cadena = str_replace(
+            array('ñ', 'Ñ', 'ç', 'Ç'),
+            array('n', 'N', 'c', 'C'),
+            $cadena
+        );
+
+        return $cadena;
+    }
+    public function getActiveContactLines(){
+        try
+        {
+            $contactLines = [
+            ];
+
+            $conn = $this->OpenConnection();
+            $tsql = "SELECT * FROM CONTACTO where activo = 1";
+            $getContactLines= sqlsrv_query($conn, $tsql);
+
+            if (!$getContactLines) {
+                die(sqlsrv_errors());
+            }
+
+            while($row = sqlsrv_fetch_array($getContactLines, SQLSRV_FETCH_ASSOC))
+            {
+                array_push($contactLines,$row);
+            }
+            sqlsrv_free_stmt($getContactLines);
+            sqlsrv_close($conn);
+        }
+        catch(Exception $e)
+        {
+            return $data = [
+                    'status' => 'KO',
+                    'error' => (sqlsrv_errors()),
+            ];
+        }
+
+        return $contactLines;
+    }
+    public function updateContactLine($id){
+        try
+        {
+
+            $conn = $this->OpenConnection();
+            $tsql = "UPDATE CONTACTO
+                    SET activo = 0
+                    WHERE id= $id;";
+            $updateContactLine= sqlsrv_query($conn, $tsql);
+
+            if (!$updateContactLine) {
+                die(sqlsrv_errors());
+            }
+
+            sqlsrv_free_stmt($updateContactLine);
+            sqlsrv_close($conn);
+        }
+        catch(Exception $e)
+        {
+            $data = [
+                'status' => 'KO',
+                'error' => (sqlsrv_errors()),
+            ];
+
+            return $data;
+        }
+
+       $data = [
+            'status' => 'OK',
+            'message' => 'Se ha deshabilitado la petición!',
+        ];
+
+        return $data;
     }
 }

@@ -4,9 +4,6 @@
 {% block css %}
 
     <style>
-        .footerContainer {
-            display: none;
-        }
         p, h4 {
             margin: 0 !important;
         }
@@ -24,16 +21,12 @@
             width: 100%;
         }
 
-        .singleProduct {
-            height: 550px;
-        }
-
         .containerTextProduct {
             padding: 20px;
             gap: 20px;
         }
 
-        .sizesShirt, option {
+        .sizes, option {
             border: 2px solid;
             font-size: 15px;
             font-weight: bold;
@@ -46,18 +39,18 @@
             font-size: 15px;
         }
 
-        .buttonProduct {
-            background: #116d11;
-            color: white !important;
-        }
-
-        .buttonProduct:hover {
-            background: #0a420a;
-        }
-
         .line {
             border: 1px solid black;
             width: 100%;
+        }
+
+        .priceProduct {
+            font-size: 18px!important;
+            color: #808080 !important;
+            font-weight: bold;
+        }
+        .totalPrice {
+            text-decoration: line-through;
         }
 
         .valorationContainer{
@@ -73,16 +66,42 @@
         .icono {
         color: #f3d300;
         }
+
+        .checkboxStar  input[type='checkbox'] {
+            display:none;
+        }
+        .checkboxStar   input[type='checkbox']+ label:before {
+            font-family: 'Font Awesome 5 Free';
+            content: "\f005";
+            color: #f3d300;
+            font-size:1.5rem;
+            cursor:pointer;
+
+        }
+        .checkboxStar   input[type='checkbox']:checked + label:before {
+            font-weight:600;
+        }
+
+
+        @media screen and (max-width: 600px) {
+            .textValoration {
+                font-size: 20px!important;
+            }
+            .listRoutes {
+                gap: 5px!important;
+                font-size: 12px!important;
+            }
+        }
     </style>
 {% endblock %}
 
 {% block content %}
 
+
     {% for product in productData %}
         <div class="d-flex flex-row pt-2 pl-5 listRoutes">
             <div><a href="/">Inicio</a></div>
             <div><i class="fa-solid fa-angle-right icons"></i></div>
-
             {% if product.categoria == 'camiseta_mujer'%}
                 <div><a href="/women/shirts">Mujer</a></div>
                 <div><i class="fa-solid fa-angle-right icons"></i></div>
@@ -116,8 +135,8 @@
         </div>
 
         <div class="container-fluid">
-            <div class="row w-100 justify-content-center">
-                <div class="col-3 mr-3 p-5 singleProduc w-100">
+            <div class="row m-0 w-100 justify-content-center flex-column flex-lg-row justify-content-center align-items-center">
+                <div class="col-12 col-md-6 col-lg-3 mr-3 p-5 w-100">
                     <div id="carousel" class="carousel slide w-100" data-ride="carousel">
                         <div class="carousel-inner w-100">
                             <div class="carousel-item active">
@@ -141,20 +160,25 @@
                     </div>
                 </div>
 
-                <div class="col-2 d-flex align-items-center p-0">
+                <div class="col-12 col-md-6 col-lg-2 d-flex align-items-center p-sm-3 p-lg-0 justify-content-center">
                     <div class="d-flex flex-column containerTextProduct">
                         <h4 class="titleProduct font-weight-bold">{{ product.nombre }}</h4>
-                        <!-- if descuento tal.. -->
-                        <p class="priceProduct font-weight-bold">{{ product.precio }} €</p>
-                        <select id="sizes" class="sizesShirt">
-                            <option value="">Selecciona una talla</option>
+                        {% if  product.precio > product.PRECIO_FINAL %}
+                            <h5 class="priceProduct font-weight-bold text-sm-center text-lg-left text-center"><span class="totalPrice descProduct"> {{ product.precio }} €</span>
+                                <span class="text-danger">{{ product.PRECIO_FINAL }} € <span class="bg-light p-2">-{{ product.descuento }}%</span></span>
+                            </h5>
+                        {% else %}
+                            <h5 class="priceProduct font-weight-bold text-sm-center text-lg-left text-center">{{ product.precio }} €</h5>
+                        {% endif %}
+                        <select id="sizes" class="sizes">
+                            <option value="" selected>Tallas disponibles</option>
                             <option value="xl">XL</option>
                             <option value="l">L</option>
                             <option value="m">M</option>
                             <option value="s">S</option>
                             <option value="xs">XS</option>
                         </select>
-                        <button type="button" class="btn btn-lg font-weight-bold buttonProduct">Añadir al carrito</button>
+                        <a class="btn btn-lg font-weight-bold btn-dark" href="javascript:history.back()"><i class="fa-solid fa-angles-left"></i> Volver a comprar</a>
                         <div class="linesProduct">
                             <p class="font-weight-bold"><i class='fa fa-truck iconsCardProduct'></i> Envío gratis.</p>
                             <p class="font-weight-bold"><i class="fa-solid fa-money-bill-transfer iconsCardProduct"></i>
@@ -167,21 +191,57 @@
                 </div>
             </div>
         </div>
-            {% endfor %}
-            <div class="row p-0 m-0 justify-content-center mb-4">
-               {% for valoration in valorations %}
-                   <div class="col-3 valorationContainer" style="width: 18rem;">
-                       <div class="card-body">
-                           <h5 class="card-title mb-4">Enviado por <span class="text-success">{{ valoration.usuario }}</span></h5>
-                           <div class="d-flex flex-row mb-4 iconosContainer">
-                               {% for i in range (1, valoration.estrellas) %}
-                                   <i class="fas fa-star icono"></i>
-                               {% endfor %}
-                           </div>
-                           <p class="card-text">{{ valoration.descripcion }}</p>
-                       </div>
-                   </div>
-                {% endfor %}
+            <div class="row p-1 m-0 justify-content-center mb-4 w-100">
+                {% if not valorations %}
+                    <div class="d-flex flex-column justify-content-center align-items-center mb-4">
+                        <h3 class="font-weight-bold mb-4 textValoration">Todavía no hay valoraciones del producto!</h3>
+                        <button type="button" class="btn btn-dark w-50" data-toggle="modal" data-target=".valoration" data-whatever="@valorations">Deja tu la primera...</button>
+                        <div class="modal fade bd-example-modal-lg valoration" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content p-3">
+                                    <h4 class="font-weight-bold"> Escribe una valoración del producto! </h4>
+                                    <form action="/registerValoration" method="post">
+                                        <h5 class="pt-2"> Cuantas estrellas le pones? </h5>
+                                        <div class="d-flex flex-row pb-2 checkboxStar">
+                                            <input id="check1" type="checkbox" value="star" name="stars[]"/>
+                                            <label for="check1"></label>
+                                            <input id="check2" type="checkbox" value="star" name="stars[]"/>
+                                            <label for="check2"></label>
+                                            <input id="check3" type="checkbox" value="star" name="stars[]"/>
+                                            <label for="check3"></label>
+                                            <input id="check4" type="checkbox" value="star" name="stars[]"/>
+                                            <label for="check4"></label>
+                                            <input id="check5" type="checkbox" value="star" name="stars[]"/>
+                                            <label for="check5"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control font-weight-bold" id="valoration" name="valoration" minlength="1" maxlength="100"></textarea>
+                                        </div>
+                                        <input type="hidden" value="{{ product.id }}" name="id_producto" />
+                                        <input type="hidden" value="/men/shirts/{{product.id}}?id={{ product.id }}&category={{product.categoria}}" name="url_product"/>
+                                        <button type="submit" class="btn btn-dark">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                        {% for valoration in valorations %}
+                            <div class="col-10 col-lg-3 valorationContainer" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Enviado por <span class="text-success">{{ valoration.usuario }}</span></h5>
+                                    <div class="d-flex flex-row mb-4 iconosContainer">
+                                        {% for i in range (1, valoration.estrellas) %}
+                                            <i class="fas fa-star icono"></i>
+                                        {% endfor %}
+                                    </div>
+                                    <p class="card-text">{{ valoration.descripcion }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                {% endif %}
+    {% endfor %}
+
             </div>
 {% endblock %}
 

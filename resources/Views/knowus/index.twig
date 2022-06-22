@@ -1,0 +1,91 @@
+{% extends "/templates/layout.twig" %}
+{% block css %}
+    <style>
+        .imgKnow {
+            height: 400px !important;
+            object-fit: cover;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .tituloFoto {
+            font-size: 50px !important;
+            color: white;
+            font-weight: bold;
+        }
+
+        .containerText {
+            width: 70rem !important;
+        }
+        .containerTextLegal {
+            width: 50rem !important;
+        }
+
+        @media screen and (max-width: 900px) {
+            .tituloFoto {
+                font-size: 35px!important;
+            }
+            .tituloSomos{
+                font-size: 30px!important;
+            }
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid p-0 m-0">
+        <div class="position-relative">
+            <img src="/img/know-us/img.jpg" class="img-fluid w-100 imgKnow">
+            <div class="centered d-flex justify-content-center flex-column">
+                <p class="title tituloFoto text-center">U N I K E</p>
+                <p class="title tituloFoto">¿Qué es Unike?</p>
+            </div>
+        </div>
+        <div class="row p-5 m-0 mt-5 d-flex flex-column justify-content-center align-items-center">
+            <div class="col-12 p-0 m-0 d-flex flex-column justify-content-center align-items-center containerText mb-4">
+                <h1 class="mb-5 tituloSomos">Positividad Corporal</h1>
+                <p class="mb-5">
+                    Para UNIKE es muy importante promover una imagen corporal sana. No queremos seguir ningún tipo de
+                    estereotipo y por esta razón trabajamos con más de 200 modelos para representar nuestra audiencia. Y
+                    tampoco queremos alterar su apariencia digitalmente: aquí no remodelamos o eliminamos estrías.
+                </p>
+            </div>
+            <div class="col-12 p-0 m-0 d-flex flex-column justify-content-center align-items-center containerText mb-4">
+                <h1 class="mb-5 tituloSomos">Opciones para tod@s</h1>
+                <p class="mb-5">
+                    Nuestra audiencia (tú) es increíblemente única. Y nosotros hacemos todo lo que está en nuestras
+                    manos para que te sientas cómod@ con lo que llevas. Nuestras marcas ASOS vienen en más de 30 tallas
+                    diferentes y nos comprometemos a facilitar todas las tallas al mejor precio, así podrás encontrar lo
+                    que mejor te sienta. También nos sentimos orgullosos de colaborar con GLAAD, una de las voces más
+                    importantes en el activismo LGBTQ, con una colección de género neutro con la que queremos unirnos
+                    para acelerar aceptación.
+                </p>
+            </div>
+            <div class="col-12 p-0 m-0 d-flex flex-column justify-content-center align-items-center containerTextLegal mb-4">
+                <h1 class="mb-5 tituloSomos">Info Legal</h1>
+                <p class="mb-5">
+                    Nombre de empresa: UNIKE.com
+                    Dirección registrada limitada: adrid, HP.º de la Castellana, 216, 28046 Madrid
+                    , España
+                    Email: unike@unike.com
+                    Registro de la compañía: Madrid (ESPAÑA)
+                    Número de registro de la compañía: 4321421
+                    Representante autorizado: Iker Alvarez Turiel
+                    Número VAT: ES 78862257743
+                </p>
+                <p class="mb-5">
+                    Creemos en un mundo libre de prejuicios en el que puedas ser tu mism@, experimentar y expresarte.
+                    Ser valiente y exprimir al máximo las aventuras que la vida te regale. Por eso, ponemos nuestro
+                    granito de arena para que todo el mundo tenga la oportunidad de descubrir su potencial, sin importar
+                    quienes son, de dónde vienen, o qué estilo tienen. Estamos aquí para darte seguridad para ser quien
+                    tú quieras.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

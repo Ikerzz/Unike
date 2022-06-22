@@ -1,32 +1,126 @@
 {% extends "/templates/layout.twig" %}
+{% block css %}
+    <style>
+        .iconHref {
+            color: #949494;
+            text-decoration: none;
+        }
+        .iconHref:visited {
+            color: #949494;
+            text-decoration: none;
+        }
+        .iconHref:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        .imgDefine {
+            object-fit: cover;
+            height: 300px!important;
+        }
+        .card {
+            width: 300px!important;
+            height: 400px!important;
+        }
+        .hoverImg {
+        }
+        .textoProducto {
+            font-size: 18px!important;
+            color: #808080 !important;
+            font-weight: bold;
+        }
+        .totalPrice {
+            text-decoration: line-through;
+        }
+        .imgSolo {
+            height: 500px !important;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .imgSoloTop {
+            height: 500px !important;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .tituloFoto {
+            font-size: 50px !important;
+            color: white;
+            font-weight: bold;
+        }
 
 
+        @media screen and (max-width: 900px) {
+            .card {
+                width: 100%!important;
+                height: 100% !important;
+            }
+            .imgDefine {
+                object-fit: cover;
+                height: 350px!important;
+                object-position: center;
+            }
+            .flechaCarrou {
+                display: none;
+            }
+            h1 {
+                font-size: 25px!important;
+            }
+            .imgDesaparecer{
+                display: none;
+            }
+        }
+
+    </style>
+{% endblock %}
 {% block content %}
 
     <!-- Carrousel -->
 
 
     <div class="col-12 carrouselContainer p-0">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
+        <div id="carrouselinicio" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner position-relative">
                 <div class="carousel-item active">
-                    <img class="imgCarrousel w-100" src="img/home/carrousel_images/img-2.jpg" alt="Unike Shop">
+                    <img class="img-fluid imgSolo w-100" src="img/home/carrousel_images/img-1.jpg" alt="Unike Shop">
+                    <div class="centered d-flex justify-content-center flex-column">
+                        <p class="title tituloFoto text-center">U N I K E</p>
+                        <p class="title tituloFoto">Tu tienda online de moda actual</p>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="imgCarrousel w-100" src="img/home/carrousel_images/img-5.jpg" alt="Unike Shop">
+                <div class="carousel-item position-relative">
+                    <img class="img-fluid imgSolo w-100" src="img/home/carrousel_images/img-2.jpg" alt="Unike Shop">
+                    <div class="centered d-flex justify-content-center flex-column">
+                        <p class="title tituloFoto text-center">Aqui podras encontrar toda variedad de produtos de hombre y de mujer</p>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="imgCarrousel w-100" src="img/home/carrousel_images/img-1.jpg" alt="Unike Shop">
+                <div class="carousel-item position-relative">
+                    <img class="img-fluid imgSoloTop w-100" src="img/home/carrousel_images/img-3.jpg" alt="Unike Shop">
+                    <div class="centered d-flex justify-content-center flex-column">
+                        <p class="title tituloFoto text-center">Nos enfocamos solo en ti</p>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img class="imgCarrousel w-100" src="img/home/carrousel_images/img-6.jpg" alt="Unike Shop">
+                <div class="carousel-item position-relative">
+                    <img class="img-fluid imgSolo w-100" src="img/home/carrousel_images/img-4.jpg" alt="Unike Shop">
+                    <div class="centered d-flex justify-content-center align-items-center flex-column">
+                        <p class="title tituloFoto text-center">Porque no echas un vistazo?</p>
+                        <a class="btn-dark p-3 w-0 text-white" href="/men/shirts"><i class="fa-solid fa-cart-shopping"> Ir a ver</i></a>
+                    </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <a class="carousel-control-prev flechaCarrou" href="#carrouselinicio" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon iconCarrousel" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <a class="carousel-control-next flechaCarrou" href="#carrouselinicio" role="button" data-slide="next">
                 <span class="carousel-control-next-icon iconCarrousel" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
@@ -35,97 +129,124 @@
 
     <!-- Cards -->
 
-    <div class="row col-12 container-fluid cardContainer">
-        <div class="col-3">
-            <div class="hoverImg">
-                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" alt="Louvre" />
+    <div class="row container-fluid col-12 cardContainer d-flex justify-content-center align-items-center w-100 m-0">
+        <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
+            <div class="hoverImg w-100">
+                <img src="/img/home/img1.png" class="w-100 img-fluid" alt="Moda Hombre" />
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
             <div class="hoverImg">
-                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" alt="Louvre" />
+                <img src="/img/home/img2.png" class="w-100 img-fluid" alt="Moda Hombre" />
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-6 col-md-6 col-lg-3 mb-4 mb-lg-0 imgDesaparecer">
             <div class="hoverImg">
-                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" alt="Louvre" />
+                <img src="/img/home/img3.png" class="w-100 img-fluid" alt="Moda Mujer" />
             </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-6 col-md-6 col-lg-3 mb-4 mb-lg-0 imgDesaparecer">
             <div class="hoverImg">
-                <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" alt="Louvre" />
+                <img src="/img/home/img4.png" class="w-100 img-fluid" alt="Moda Hombre" />
             </div>
         </div>
     </div>
 
     <!-- Intro Colección -->
 
-    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center p-5">
         <h1>Unike Summer 2022/23</h1>
         <p>Descubre la nueva colección de verano</p>
     </div>
 
     <div class="col-12 p-0">
-        <img class="imgCarrousel w-100" src="/img/home/carrousel_images/img-3.jpg" alt="First slide">
+        <img class="img-fluid imgSoloTop w-100" src="/img/home/carrousel_images/img-5.jpg" alt="Moda Hombre, Moda Mujer">
     </div>
 
     <!-- Articulos Sueltos -->
 
     <div class="col-12 pt-4 pb-4">
             <div class="row d-flex flex-row justify-content-center align-items-center">
+                {% for product in products %}
+                    <div class="col-12 col-md-6 col-lg-2 d-flex flex-column justify-content-center align-items-center mb-5 mb-lg-0">
+                        <div class="card">
+                            <div class="card-1 w-100">
 
-                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-1 w-100">
-                            <img class="w-100" src="https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg" alt="First slide">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Cotton-Blend Jacket</h3>
-                            <p>$48.00</p>
+                                {% if product.categoria == 'camiseta_hombre' %}
+                                <a href="/men/shirts/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+
+                                {% if product.categoria == 'pantalon_hombre' %}
+                                <a href="/men/pants/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+
+                                {% if product.categoria == 'zapatilla_hombre' %}
+                                <a href="/men/footwear/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+
+                                {% if product.categoria == 'camiseta_mujer' %}
+                                <a href="/women/shirts/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+
+                                {% if product.categoria == 'pantalon_mujer' %}
+                                <a href="/women/pants/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+
+                                {% if product.categoria == 'zapatilla_mujer' %}
+                                <a href="/women/footwear/{{ product.id }}?id={{ product.id }}&category={{ product.categoria }}">
+                                    <img class="w-100 img-fluid imgDefine" src="{{ product.url }}" alt="First slide">
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="p-3 d-flex flex-row flex-column">
+                                <h5 class="textoProducto text-center">{{ product.nombre }}</h5>
+                                {% if  product.precio > product.PRECIO_FINAL %}
+                                    <h5 class="textoProducto text-center"><span class="totalPrice descProduct"> {{ product.precio }} €</span>
+                                        <span class="text-danger">-{{ product.descuento }}%  {{ product.PRECIO_FINAL }} € </span>
+                                    </h5>
+                                {% else %}
+                                    <h5 class="textoProducto text-center">{{ product.precio }} €</h5>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-1 w-100">
-                            <img class="w-100" src="https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg" alt="First slide">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Cotton-Blend Jacket</h3>
-                            <p>$48.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-1 w-100">
-                            <img class="w-100" src="https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg" alt="First slide">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Cotton-Blend Jacket</h3>
-                            <p>$48.00</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
-                    <div class="card">
-                        <div class="card-1 w-100">
-                            <img class="w-100" src="https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg" alt="First slide">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Cotton-Blend Jacket</h3>
-                            <p>$48.00</p>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
+
+
+        {% if data.status == 'OK' %}
+            <div class="modal fade bd-example-modal-sm show" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-modal="true" style="display: block">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content p-0">
+                        <div class="p-3 d-flex justify-content-center align-items-center flex-column modalTextContainer">
+                            <span class="text-success font-weight-bold text-white text-center">{{ data.message }}</span>
+                            {% if data.url %}
+                                <a class="btn btn-dark mt-2" href="{{ data.url }}">Ver valoracion <i class="fa-solid fa-angles-right"></i></a>
+                            {% endif %}
+                        </div>
+                        <a href="/" class="iconHref text-center pt-2">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-backdrop fade show"></div>
+        {% endif %}
+
     </div>
 
 {% endblock %}

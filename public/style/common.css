@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
 
 body {
     font-family: "Roboto"!important;
     height: 20vh!important;
 }
+
+/* Nav CSS */
 .navbarContainer {
     font-weight: bold!important;
 }
@@ -18,11 +20,7 @@ body {
 .imgLogo {
     width: 125px;
 }
-@media (max-width: 600px) {
-    .facet_sidebar {
-        display: none;
-    }
-}
+
 .carousel-caption {
     background: rgba(0, 0, 0, 0.2);
 }
@@ -37,101 +35,6 @@ body {
 .menuNav {
     column-gap: 20pt;
 }
-
-/*.content{*/
-/*    width: 100%;*/
-/*    min-height: calc(100vh - 114px - 112px);*/
-/*}*/
-
-.footerContainer {
-    background: black!important;
-}
-
-.textFooter {
-    font-style: italic;
-    text-decoration: none;
-    color: white;
-}
-
-.textFooter:hover {
-    font-weight: bold;
-    text-decoration: none;
-    color: white;
-}
-
-.textFooter:visited{
-    text-decoration: none;
-    color: white;
-}
-
-.cardContainer{
-    padding: 20pt;
-}
-
-.brandName {
-    font-size: 20pt;
-}
-
-.carrouselContainer {
-    height: auto;
-}
-
-.imgCarrousel {
-    height: 500px;
-}
-
-/*footer*/
-
-
-
-/**/
-
-
-/*hehe*/
-
-.card{
-    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
-    transition: .3s;
-    cursor: pointer;
-    border:0!important;
-}
-
-.card:hover{
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-
-.card img{
-    max-height: 300px;
-}
-
-.card-1 {
-}
-
-/*.card-1{*/
-/*    background-image: url(https://grayson.qodeinteractive.com/wp-content/uploads/2016/07/shop-1-image-1.jpg);*/
-/*    background-repeat: no-repeat;*/
-/*    background-size: 100%;*/
-/*}*/
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 1000px) {
-    .topNav {
-        padding: 2.5rem;
-    }
-    .nav-right {
-        display: none;
-    }
-
-    .nav-item{
-        border-bottom: 1px solid lightgray;
-        width: 100%!important;
-    }
-    .navbarItems{
-        width: 100%!important;
-    }
-}
-
 .menuDrop {
     padding-right: 50pt!important;
     padding: 20px!important;
@@ -155,3 +58,116 @@ body {
     color: black;
     font-weight: bold;
 }
+
+.iconLayout {
+    color: white;
+    text-decoration: none;
+}
+
+.iconLayout:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.iconLayout:hover{
+    text-decoration: none;
+}
+
+.iconTwitterFacebook:hover {
+    color: rgb(29, 155, 240);
+}
+
+.iconInstagram:hover {
+    color:deeppink;
+}
+.buttonSubscribe {
+    color: white;
+    background: none;
+}
+
+.buttonSubscribe:hover {
+    color: rgb(29, 155, 240);
+}
+
+
+/* ------------------------- */
+
+
+/* Footer CSS */
+.footerContainer {
+    background: black!important;
+}
+
+.textFooter {
+    font-style: italic;
+    text-decoration: none;
+    color: white;
+}
+
+.textFooter:hover {
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.textFooter:visited{
+    text-decoration: none;
+    color: white;
+}
+
+/* ------------------------- */
+
+/* CSS Extra de elementos sueltos */
+.cardContainer{
+    padding: 20pt;
+}
+
+.brandName {
+    font-size: 20pt;
+}
+
+.carrouselContainer {
+    height: auto;
+}
+
+.imgCarrousel {
+    height: 500px;
+}
+
+.card{
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .3s;
+    cursor: pointer;
+    border:0!important;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card img{
+    max-height: 300px;
+}
+
+/* ------------------------- */
+
+/* Media Querys */
+@media only screen and (max-width: 1000px) {
+    .topNav {
+        padding: 2.5rem;
+    }
+    .nav-right {
+        display: none;
+    }
+
+    .nav-item{
+        border-bottom: 1px solid lightgray;
+        width: 100%!important;
+    }
+    .navbarItems{
+        width: 100%!important;
+    }
+}
+/* ------------------------- */
+

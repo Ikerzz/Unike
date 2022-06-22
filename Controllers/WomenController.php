@@ -23,7 +23,9 @@ class WomenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'camiseta_mujer';";
+            $tsql = "SELECT *, precio - (PRODUCTOS.PRECIO*(PRODUCTOS.DESCUENTO/100)) as PRECIO_FINAL 
+                    FROM PRODUCTOS 
+                    WHERE categoria = 'camiseta_mujer';";
             $getShirts= sqlsrv_query($conn, $tsql);
 
             if (!$getShirts){
@@ -69,7 +71,9 @@ class WomenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'pantalon_mujer';";
+            $tsql = "SELECT *, precio - (PRODUCTOS.PRECIO*(PRODUCTOS.DESCUENTO/100)) as PRECIO_FINAL 
+                    FROM PRODUCTOS 
+                    WHERE categoria = 'pantalon_mujer';";
             $getPants= sqlsrv_query($conn, $tsql);
 
             if (!$getPants){
@@ -113,7 +117,9 @@ class WomenController
             ];
 
             $conn = $SQLController->OpenConnection();
-            $tsql = "SELECT * FROM PRODUCTOS WHERE categoria = 'zapatilla_mujer';";
+            $tsql = "SELECT *, precio - (PRODUCTOS.PRECIO*(PRODUCTOS.DESCUENTO/100)) as PRECIO_FINAL 
+                    FROM PRODUCTOS 
+                    WHERE categoria = 'zapatilla_mujer';";
             $getFootWear= sqlsrv_query($conn, $tsql);
 
             if (!$getFootWear){

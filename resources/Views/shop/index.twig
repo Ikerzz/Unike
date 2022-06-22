@@ -1,39 +1,93 @@
 {% extends "templates/layout.twig" %}
 
 {% block css %}
- <style>
-    .productContainer{
-        gap: 10px;
-    }
-    .sizes {
-        width: 50px;
-    }
+    <style>
+        .productContainer {
+            gap: 10px;
+        }
 
-    .table td{
-        border: none!important;
-    }
+        .sizes, option {
+            border: 2px solid;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 5px;
+            width: 60px !important;
+        }
 
-    .buttonCart:checked {
-        border: none!important;
-    }
- </style>
+        .search {
+            border: 2px solid;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 5px;
+            margin-right: auto;
+            margin-left: 50px !important;
+        }
+
+        .botonCarrito {
+            margin-right: 50px !important;
+        }
+
+        .table td {
+            border: none !important;
+        }
+
+        .buttonCart:checked {
+            border: none !important;
+        }
+
+        .tachado {
+            color: #808080 !important;
+            text-decoration: line-through;
+        }
+
+        @media screen and (max-width: 800px) {
+            .showSearch {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .product, .product-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+        }
+
+        @media screen and (min-width: 900px) and (max-width: 990px) {
+            .showSearch {
+                margin-right: -2rem !important;
+            }
+        }
+
+        @media screen and (min-width: 1000px) and (max-width: 1300px) {
+            .showSearch {
+                margin-right: 15rem !important;
+            }
+        }
+
+    </style>
 {% endblock %}
 
 {% block content %}
     <div class="container-fluid row w-100 mt-4 mr-0 ml-0" id="app">
         <div class="cols-12 d-flex justify-content-center w-100">
 
-        <input class="" id="searchbar" onkeyup="search_shirt()" type="text" name="search" placeholder="Busca tu producto...">
+            <input id="search" class="search" onchange="buscarProducto()" type="text"
+                   placeholder="Busca tu producto...">
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#cartModal"><i class="fa-solid fa-cart-shopping"></i> ({- totalItems
-            -})
-        </button>
+            <button class="btn btn-dark font-weight-bold botonCarrito" data-toggle="modal" data-target="#cartModal"><i
+                        class="fa-solid fa-cart-shopping"></i> ({- totalItems
+                -})
+            </button>
 
         </div>
 
         <div class="cols-12 w-100">
             <!-- Modal -->
-            <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade modalContainer" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -41,47 +95,58 @@
                         </div>
                         <div class="modal-body">
                             <shopping-cart inline-template :items="cartItems">
-                                    <table class="table table-cart">
-                                        <tr v-for="(item, index) in items">
-                                            <td>{- item.nombre -}</td>
-                                            <td style="width: 120px!important;">
-                                                <input v-model="item.cantidad" class="form-control input-qty"
-                                                       type="number" min="1">
-                                            </td>
-                                            <td class="text-right">{- item.precio -} €</td>
-                                            <td>
-                                                <button @click="removeItem(index)">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr v-show="items.length === 0">
-                                            <td colspan="4" class="text-center" style="border:none!important;">El carrito está vacío!</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                        <tr v-show="items.length > 0">
-                                            <td></td>
-                                            <td colspan="3" style="border-top: 1px solid #dee2e6!important;" class="text-right">Total del Carrito {- Total -} €</td>
-                                        </tr>
-                                    </table>
+                                <table class="table table-cart">
+                                    <tr v-for="(item, index) in items">
+                                        <td>{- item.nombre -}</td>
+                                        <td style="width: 120px!important;">
+                                            <input v-model="item.cantidad" class="form-control input-qty"
+                                                   type="number" min="1" disabled>
+                                        </td>
+                                        <td class="text-right">{- item.precio -} €</td>
+                                        <td>
+                                            <button @click="removeItem(index)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr v-show="items.length === 0">
+                                        <td colspan="4" class="text-center" style="border:none!important;">
+                                            El carrito está vacío!
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                    <tr v-show="items.length > 0">
+                                        <td> <button @click="sendIdentity()" class="btn btn-sm btn-dark p-2">
+                                                Comprar
+                                            </button></td>
+                                        <td colspan="3" style="border-top: 1px solid #dee2e6!important;"
+                                            class="text-right">Total del Carrito {- Total -} €
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                </table>
                                 <!-- /.container -->
                             </shopping-cart>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i
+                                        class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="container-fluid p-0 row m-0">
-                <div class="row col-12 d-flex flex-row justify-content-center">
-                    <div class="col-2 m-5 showSearch" v-for="(item,index) in items">
+            <div class="container-fluid p-0 row m-0 d-flex flex-column">
+                <div class="row col-12 d-flex flex-row justify-content-center m-0">
+                    <div class="col-12 col-md-6 col-lg-2 mt-4 mb-4 mb-lg-0 mt-lg-0 col-lg-2 m-lg-5 showSearch"
+                         v-for="item in items" :key="item.id">
                         <div class="product">
                             <div class="product-image">
-                                <a :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria" class="image" :name="item.id">
+                                <a :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria"
+                                   class="image" :name="item.id">
                                     <img class="img-1" :src="item.url" :alt="item.nombre">
                                     <img class="img-2" :src="item.back_url" :alt="item.nombre">
                                 </a>
@@ -97,22 +162,31 @@
                                 <ul class="rating">
                                     <li class="disable">(Reviews en el producto)</li>
                                 </ul>
-                                <h3 class="title"><a :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria" id="shirtName">{- item.nombre -}</a></h3>
+                                <h3 class="title"><a
+                                            :href="'/men/shirts/' + item.id + '?id=' + item.id + '&' + 'category=' + item.categoria"
+                                            id="shirtName">{- item.nombre -}</a></h3>
                                 <select class="sizes" id="sizes">
-                                    <option value="xl">xl</option>
-                                    <option value="l">l</option>
-                                    <option value="m">m</option>
-                                    <option value="s">s</option>
-                                    <option value="xs">xs</option>
+                                    <option value="xl">XL</option>
+                                    <option value="l">L</option>
+                                    <option value="m">M</option>
+                                    <option value="s">S</option>
+                                    <option value="xs">XS</option>
                                 </select>
-                                <div class="">{- item.precio -} €</div>
+                                <div v-if="item.precio > item.PRECIO_FINAL" class="">
+                                    <span class="font-weight-bold tachado">{- item.precio -} €</span>
+                                    <span class="ml-2 text-danger font-weight-bold">{- item.PRECIO_FINAL -} €</span>
+                                    <span class="bg-light font-weight-bold p-2 text-danger">-{- item.descuento -}%</span>
+                                </div>
+                                <div v-else>
+                                    <span class="font-weight-bold price">{- item.precio -} €</span>
+                                </div>
                                 <div class="boton">
-                                    <button @click="addToCart(item)" class="btn btn-sm btn-light p-2">
+                                    <button @click="addToCart(item)" class="btn btn-sm btn-dark p-2">
                                         Añadir al carrito
                                     </button>
                                 </div>
                             </div>
-                       </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,16 +200,17 @@
 
 {% block js %}
     <script>
-        function search_shirt() {
-            let input = document.getElementById('searchbar').value
+        function buscarProducto() {
+            let input = document.getElementById('search').value
             input = input.toLowerCase();
             let x = document.getElementsByClassName('showSearch');
 
-            console.log(x[0].children[0].children[1].children[1].innerText);
+            // console.log(x[0].children[0].children[1].children[1].innerText);
 
             for (i = 0; i < x.length; i++) {
                 if (!x[i].children[0].children[1].children[1].innerText.toLowerCase().includes(input)) {
                     x[i].style.display = "none";
+                    console.log(x[i]);
                 } else {
                     x[i].style.display = "block";
                 }
@@ -144,7 +219,6 @@
 
         const products = {{ productData|json_encode|raw }};
         console.log(products);
-
         // Componente carrito (x)
 
         Vue.component('shopping-cart', {
@@ -170,9 +244,12 @@
         const vm = new Vue({
             el: '#app',
             delimiters: ['{-', '-}'],
-            data: {
-                cartItems: [],
-                items: products
+            data() {
+                return {
+                    search: '',
+                    cartItems: [],
+                    items: {{ productData|json_encode|raw }}
+                }
             },
 
             computed: {
@@ -180,14 +257,12 @@
                     return this.cartItems.reduce((accumulator, item) => {
                         return accumulator + item.cantidad;
                     }, 0);
-                }
+                },
             },
 
             methods: {
                 // Funcion añadir al carrito
                 addToCart(itemToAdd) {
-                    let found = false;
-
                     // Añadir item || Aumentar Cantidad
                     let itemInCart = this.cartItems.filter(item => item.id === itemToAdd.id);
                     let isItemInCart = itemInCart.length > 0;
@@ -199,7 +274,15 @@
                     }
 
                     itemToAdd.cantidad = 1;
-                }
+                },
+                // sendIdentity() {
+                //     try {
+                //         const {data} = axios.post('https://www.petario.com/test.php', this.cartItems);
+                //         console.log(data);
+                //     } catch(e) {
+                //         console.log(e);
+                //     }
+                // },
             }
         })
 

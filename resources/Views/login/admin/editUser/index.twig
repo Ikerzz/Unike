@@ -76,6 +76,7 @@
                 <div class="col-12 d-flex justify-content-center">
                     <input type="submit" class="btn btn-secondary w-auto" value="Editar Usuario"/>
                 </div>
+                <input value="{{ user.ID }}" type="hidden" id="id" name="id">
             </form>
         {% endfor %}
     <a href="/panel" class="btn btn-secondary text-white m-4"><i class="fa-solid fa-angles-left"></i> Volver al menú</a>

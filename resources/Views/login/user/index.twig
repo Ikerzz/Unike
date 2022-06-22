@@ -3,6 +3,9 @@
 {% block css %}
 
     <style>
+        .textFont {
+            font-size: 17px!important;
+        }
         .footerContainer {
             display: none;
         }
@@ -33,6 +36,8 @@
             color: #808080 !important;
             font-weight: bold;
         }
+        .containerProductosDentro{
+        }
     </style>
 
 {% endblock %}
@@ -43,7 +48,7 @@
         <h3 class="text-center mb-5 mt-3"><span class="textProductsBuy">Lista de tus productos comprados</span></h3>
         <div class="row m-0 containerProducts d-flex justify-content-center">
             {% for product in products %}
-                <div class="col-12 row mb-3 d-flex justify-content-center" id="{{product.id_producto}}">
+                <div class="col-12 row mb-3 d-flex justify-content-center containerProductosDentro" id="{{product.id_producto}}">
                     <div class="col-lg-2 d-flex flex-column justify-content-center align-items-center">
                         {% if product.categoria == 'camiseta_hombre' %}
                             <a href="/men/shirts/{{ product.id_producto }}?id=' + {{ product.id_producto }} + '&' + 'category=' + {{ product.categoria }}">
@@ -83,22 +88,30 @@
 
                     </div>
                     <div class="col-12 col-lg-4 d-flex flex-column justify-content-center gap mb-3 mb-lg-0">
-                        <h5 class="font-weight-bold mb-lg-3 mt-3 mt-lg-0 text-center">Nombre de la prenda</h5>
-                        <h5 class="text-center descProduct">{{ product.nombre }}</h5>
+                        <h5 class="font-weight-bold mb-lg-3 mt-3 mt-lg-0 text-center textFont">Nombre de la prenda</h5>
+                        <h5 class="text-center descProduct textFont">{{ product.nombre }}</h5>
                     </div>
-                    <div class="col-lg-3 d-flex flex-column justify-content-center gap align-items-center mb-3 mb-lg-0">
-                        <h5 class="font-weight-bold mb-3">Precio</h5>
-                        {% if  product.precio > product.PRECIO_FINAL %}
-                            <h5><span class="totalPrice descProduct">{{ product.precio }} €</span> <span class="text-danger">{{ product.PRECIO_FINAL }} €</span></span>
-                        {% else %}
-                            <h5 class="descProduct">{{ product.precio }} €</h5>
+                    <div class="col-12 col-lg-1 d-flex flex-column justify-content-center gap mb-3 mb-lg-0">
+                        <h5 class="font-weight-bold mb-lg-3 mt-3 mt-lg-0 text-center textFont">Cantidad</h5>
+                        <h5 class="text-center descProduct textFont">{{ product.cantidad }}</h5>
+                    </div>
+                    <div class="col-lg-2 d-flex flex-column justify-content-center gap align-items-center mb-3 mb-lg-0">
+                        <h5 class="font-weight-bold mb-3 textFont">Precio Total</h5>
+                        {% if  product.PRECIO_TOTAL_CANTIDAD > product.PRECIO_DESCUENTO %}
+                            <h5 style="">
+                                <span class="totalPrice descProduct textFont">{{ product.PRECIO_TOTAL_CANTIDAD }} €</span>
+                                <span class="text-danger textFont">{{ product.PRECIO_DESCUENTO }} €</span>
+                                </span>
+                                <span class="text-danger bg-light textFont">-{{ product.DESCUENTO }}% €</span>
+                                {% else %}
+                            <h5 class="descProduct textFont">{{ product.PRECIO_TOTAL_CANTIDAD }} €</h5>
                         {% endif %}
                         </h5>
                     </div>
 
                     <div class="col-lg-3 d-flex flex-column justify-content-center gap align-items-center">
-                        <h5 class="font-weight-bold mb-3">Fecha de Compra</h5>
-                        <h5 class="descProduct"> {{ product.fecha_compra }}</h5>
+                        <h5 class="font-weight-bold mb-3" textFont>Fecha de Compra</h5>
+                        <h5 class="descProduct textFont"> {{ product.fecha_compra }}</h5>
                     </div>
                 </div>
             {% endfor %}

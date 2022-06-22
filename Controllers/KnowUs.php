@@ -16,7 +16,7 @@ class KnowUs
 
     public function getIndex(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, '/home/home.twig');
+        return $this->view->render($response, '/knowus/index.twig');
     }
 
 }
