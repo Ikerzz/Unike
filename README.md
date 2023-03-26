@@ -1,3 +1,14 @@
 # Unike
-Tienda Online de Ropa 
-Proyecto final para desarollo de aplicaciones WEB 
+Proyecto final para grado superior de desarollo de aplicaciones web.
+
+
+# Tecnologías utilizadas
+
+  - Laravel
+  - Slim
+  - MySQL
+  - Twig
+  - HTML5
+  - CSS3
+  - JS
+  - Vuejs
